@@ -6,6 +6,8 @@ import math
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn import preprocessing
+import random
 
 # Newton's method
 
@@ -131,7 +133,7 @@ def square_loss(x, y, theta):
 
 # Define gradient descent Function
 def gradient_descent(x, y, theta, convergence,
-                     learn_rate=0.1, interations=100):
+                     learn_rate=0.1, iterations=100):
     '''
     Implementation of Gradient Descent Algorithm
 
@@ -153,15 +155,15 @@ def gradient_descent(x, y, theta, convergence,
 
     n = x.shape[0]
     m = x.shape[1]
-    cost_history = np.zeros([interations, 1])
-    theta_history = np.zeros([interations, m])
+    cost_history = np.zeros([iterations, 1])
+    theta_history = np.zeros([iterations, m])
     current_theta = theta
     it = 0
     initial_converg = 10
-    while initial_converg > convergence and it <= interations:
+    while initial_converg > convergence and it <= iterations:
         yhat = x @ current_theta
         theta_update = current_theta-(1/n)*learn_rate*x.transpose() @ (yhat-y)
-        theta_history[it, :] = theta.transpose()
+        theta_history[it, :] = theta_update.transpose()
         cost_history[it, :] = square_loss(x, y, theta)
         it += 1
         initial_converg = np.max(np.abs(theta_update - current_theta))
@@ -183,6 +185,7 @@ ax.set(xlabel='Population', ylabel='Profit',
        title='Scatter Plot of X and Y')
 fig.show()
 
+
 # transfer dataframe into the matrix
 hp_x = np.asmatrix(hp_data.Population).transpose()
 hp_y = np.asmatrix(hp_data.Profit).transpose()
@@ -197,4 +200,102 @@ hp_parameters, hp_cost_history, hp_theta_hisotry = gradient_descent(
     matrix_x, hp_y, hp_theta, 0.00001, 0.01, 50000
 )
 
+matrix([[-3.89024352],
+        [ 1.19247736]])
+
+# Now we plot the regression line
+reg_x = np.linspace(5, 23, 1000).reshape([1000, 1])
+reg_y = reg_x * hp_parameters[1] + hp_parameters[0]
+
+fig, ax = plt.subplots(figsize=(6, 5))
+ax.scatter(hp_data.Population, hp_data.Profit)
+ax.plot(reg_x, reg_y, 'r')
+ax.set(xlabel='Population', ylabel='Profit',
+       title='Scatter Plot of X and Y')
+fig.show()
+
+
+# Example: Prostate Cancer
+
+prostate = pd.read_csv('Dataset/GradientEx2.csv')
+prostate.head()
+prostate.shape
+prostate.corr()
+
+prostate_y = np.asmatrix(prostate.PSA).reshape([prostate.shape[0], 1])
+prostate_x = np.asmatrix(prostate.drop(['PSA', 'ID'], axis=1))
+prostate_x.shape
+
+prostate_theta = np.zeros([7, 1])
+prostate_loss = square_loss(prostate_x, prostate_y, prostate_theta)
+
+prostate_parameters, prostate_cost_history, prostate_para_hist = gradient_descent(
+    prostate_x, prostate_y, prostate_theta, 0.001, 0.1, 1000
+)
+
+# It's important to normalize your dataset!
+
+prostate_parameters, prostate_cost_history, prostate_para_hist = gradient_descent(
+    preprocessing.scale(prostate_x), preprocessing.scale(prostate_y),
+    prostate_theta, 0.001, 0.1, 1000
+)
+
+
+# Stochastic Graident Descent
+def Stcst_gd(x, y, theta, samplesize, learning=0.1, iterations=100):
+    '''
+    Implementing the algorithm to do stochastic gradient descent
+    Input
+    ------
+    x : dataset of dependent variables, an n by m matrix
+    y : a vector of independent variable, an n by 1 vector
+    theta : parameters (or estimations), m by 1 vetor
+    samplesize : sample size of reshuffle, sample size <= x.shape[0]
+    learning : learning rate, default value = 0.1
+    interations : the maximum of interation
+
+    Output
+    -------
+    theta: the convergent parameters
+    cost_history : cost vector
+    theta_history : trace of theta updating
+    '''
+
+    if samplesize > x.shape[0]:
+        raise ValueError('Sample size must be less than population size')
+
+    n = x.shape[0]
+    m = x.shape[1]
+    current_theta = theta
+    alpha = learning
+    cost_history = np.zeros([iterations, 1])
+    theta_history = np.zeros([iterations, m])
+    for it in range(iterations):
+        randomIndex = random.sample(range(samplesize), samplesize)
+        xtrain = x[randomIndex]
+        ytrain = y[randomIndex]
+        for i in range(samplesize):
+            x_i = xtrain[i].reshape(1, -1)
+            y_i = ytrain[i].reshape(-1, 1)
+            fx = x_i @ current_theta
+            update_theta = (current_theta
+                             - alpha * 2
+                             * x_i.transpose() @ (fx - y_i))
+            current_theta = update_theta
+        theta_history[it, :] = update_theta.transpose()
+        cost_history[it, :] = square_loss(x, y, update_theta)
+
+    return current_theta, cost_history, theta_history
+
+
+hp_stc, stc_cost_history, stc_theta_hisotry = Stcst_gd(
+    matrix_x, hp_y, hp_theta, 50, 0.01, 150
+)
+
+# matrix([[-3.4037112 ],
+#         [ 1.06040721]])
+
+hp_stc, stc_cost_history, stc_theta_hisotry = Stcst_gd(
+    matrix_x, hp_y, hp_theta, 120, 0.01, 150
+)
 #
