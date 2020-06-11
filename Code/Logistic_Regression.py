@@ -5,7 +5,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import scipy as sp
+import seaborn as sns
 
 
 # Read the dataset
@@ -16,6 +16,8 @@ lgy = pd.read_csv('Dataset/Logistic_y.txt', sep=" +", names=['y'],
 lgx.head()
 lgy.head()  # the value is float
 lgy.astype(int)  # convert all values to int
+lgy.values.reshape([99, ])
+
 
 # construct matrix
 lg1_xm = np.hstack([np.ones([lgx.shape[0], 1]), np.asmatrix(lgx)])
@@ -122,19 +124,12 @@ theta_estimated = newton(lg1_xm, lg1_ym, theta_inital,
                          gradient_L, hessian_L, 1e-6, 100)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Visualize the dataset
+fig, ax = plt.subplots(figsize=(6, 5))
+sns.scatterplot(x='x1', y='x2', hue='y',
+                data=pd.concat([lgx, lgy.astype(int)], axis=1))
+x1_vec = np.linspace(lgx["x1"].min(), lgx["x1"].max(), 2)
+plt.plot(x1_vec,
+         (-x1_vec*theta_estimated[1]-theta_estimated[0])/theta_estimated[2],
+         color="red")
 #

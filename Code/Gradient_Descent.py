@@ -200,8 +200,8 @@ hp_parameters, hp_cost_history, hp_theta_hisotry = gradient_descent(
     matrix_x, hp_y, hp_theta, 0.00001, 0.01, 50000
 )
 
-matrix([[-3.89024352],
-        [ 1.19247736]])
+# matrix([[-3.89024352],
+#         [ 1.19247736]])
 
 # Now we plot the regression line
 reg_x = np.linspace(5, 23, 1000).reshape([1000, 1])
@@ -229,13 +229,13 @@ prostate_x.shape
 prostate_theta = np.zeros([7, 1])
 prostate_loss = square_loss(prostate_x, prostate_y, prostate_theta)
 
-prostate_parameters, prostate_cost_history, prostate_para_hist = gradient_descent(
+prost_parameters, prost_cost_history, prost_para_hist = gradient_descent(
     prostate_x, prostate_y, prostate_theta, 0.001, 0.1, 1000
 )
 
 # It's important to normalize your dataset!
 
-prostate_parameters, prostate_cost_history, prostate_para_hist = gradient_descent(
+prost_parameters, prost_cost_history, prost_para_hist = gradient_descent(
     preprocessing.scale(prostate_x), preprocessing.scale(prostate_y),
     prostate_theta, 0.001, 0.1, 1000
 )
@@ -264,7 +264,6 @@ def Stcst_gd(x, y, theta, samplesize, learning=0.1, iterations=100):
     if samplesize > x.shape[0]:
         raise ValueError('Sample size must be less than population size')
 
-    n = x.shape[0]
     m = x.shape[1]
     current_theta = theta
     alpha = learning
@@ -278,9 +277,8 @@ def Stcst_gd(x, y, theta, samplesize, learning=0.1, iterations=100):
             x_i = xtrain[i].reshape(1, -1)
             y_i = ytrain[i].reshape(-1, 1)
             fx = x_i @ current_theta
-            update_theta = (current_theta
-                             - alpha * 2
-                             * x_i.transpose() @ (fx - y_i))
+            update_theta = (current_theta - alpha * 2
+                            * x_i.transpose() @ (fx - y_i))
             current_theta = update_theta
         theta_history[it, :] = update_theta.transpose()
         cost_history[it, :] = square_loss(x, y, update_theta)
