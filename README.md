@@ -16,5 +16,7 @@ This course has a very old website which includes all the notes and typed soluti
 
 [CS229 - Machine Learning](https://see.stanford.edu/Course/CS229)
 
-Sometime, you might want to study machine learning by following a different path, the machine learning course from Carnegie Mellon University would be a good option:
-[Machine Learning](http://www.cs.cmu.edu/%7Etom/10701_sp11/)
+Sometime, you might want to study machine learning by following a different path:
+
+* The machine learning course from Carnegie Mellon University: [Machine Learning](http://www.cs.cmu.edu/%7Etom/10701_sp11/)
+* Statistical Methods for Machine Learning by *Larry Wasserman*: [Lecture Videos](https://www.youtube.com/watch?v=zcMnu-3wkWo&list=PLTB9VQq8WiaCBK2XrtYn5t9uuPdsNm7YE)
