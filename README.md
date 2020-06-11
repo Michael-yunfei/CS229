@@ -15,3 +15,6 @@ The following textbooks are recommended:
 This course has a very old website which includes all the notes and typed solutions for the problem sets, here is the link:
 
 [CS229 - Machine Learning](https://see.stanford.edu/Course/CS229)
+
+Sometime, you might want to study machine learning by following a different path, the machine learning course from Carnegie Mellon University would be a good option:
+[Machine Learning](http://www.cs.cmu.edu/%7Etom/10701_sp11/)
