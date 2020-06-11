@@ -10,3 +10,8 @@ The following textbooks are recommended:
 
 * Machine Learning: A Probabilistic Perspective, by *Kevin P. Murphy*
 * Foundations of Machine Learning, by *Afshin Rostamizadeh, Ameet Talwalkar, and Mehryar Mohri*
+* Hands on Machine Learning, by *Aurelien Geron*
+
+This course has a very old website which includes all the notes and typed solutions for the problem sets, here is the link:
+
+[CS229 - Machine Learning](https://see.stanford.edu/Course/CS229)
