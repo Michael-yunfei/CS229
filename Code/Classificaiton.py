@@ -78,31 +78,26 @@ def plot_precision_recall_vs_threshold(precisions, recalls, thresholds):
 plot_precision_recall_vs_threshold(precisions, recalls, thresholds)
 
 
+# Multinominal classification
+# Either take OnevsAll strategy or apply Multinominal methods
+sgd_clf.fit(X_train, Y_train)
+sgd_clf.predict(X_test)
+cross_val_score(sgd_clf, X_train, Y_train, cv=3, scoring="accuracy")
+# array([0.86872625, 0.87639382, 0.87848177])
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Y_predict = cross_val_predict(sgd_clf, X_train, Y_train, cv=3)
+confusion_matrix(Y_train, Y_predict)
+# array([[5740,    4,   36,   17,   10,   30,   36,    5,   40,    5],
+#        [   1, 6393,   46,   72,    7,   62,    5,   14,  123,   19],
+#        [  51,   58, 5216,  149,   41,   42,   73,   49,  254,   25],
+#        [  47,   38,  300, 5069,   18,  317,   28,   51,  158,  105],
+#        [  14,   28,   83,   18, 5249,   12,   46,   20,   72,  300],
+#        [  83,   24,   71,  194,   90, 4442,  119,   25,  250,  123],
+#        [  72,   16,  152,   17,   63,   92, 5420,    5,   74,    7],
+#        [  31,   36,  122,   58,  104,   36,    2, 5353,   37,  486],
+#        [  79,  205,  169,  163,  117,  355,   40,   28, 4517,  178],
+#        [  42,   46,   46,   93,  338,   96,    1,  134,   80, 5073]])
+sgd_clf.classes_  # [0, 1, 2, .... 9]
+plt.matshow(confusion_matrix(Y_train, Y_predict),  cmap=plt.cm.gray)
+# 1 is the brightest, which means the accuracy is the highest
 #
