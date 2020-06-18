@@ -5,7 +5,7 @@ This repository is built for me to tackle the mathematical models and algorithm 
 * [Syllabus](http://cs229.stanford.edu/syllabus-autumn2018.html)
 * [Lectures](https://www.youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU)
 
-CS229 prepares you to be a machine learning scientist capable of developing ML algorithms. Somepeople who don't have strong mathematical backgroup might find this course very challenging. Please, don't feel intimidated. I have typed almost all the mathematical derivations for each ML models, and put the source code in this repository. As long as you know have studied *Linear Algebra* and *Calculus*, you should be fine.    
+CS229 prepares you to be a machine learning scientist capable of developing ML algorithms. Some people who don't have strong mathematical backgroup might find this course very challenging. Please, don't feel intimidated. I have typed almost all the mathematical derivations for each ML models, and put the source code in this repository. As long as you have studied *Linear Algebra* and *Calculus*, you should be fine. 
 
 The following textbooks are recommended:
 
