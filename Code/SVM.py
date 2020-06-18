@@ -115,21 +115,6 @@ class SVM:
         self.colors = ['red', 'blue', 'green', 'purple', 'orange', 'grey']
         self.cmaps = ['Reds', 'Blues', 'Greens', 'Purples', 'Oranges', 'Grey']
 
-    def compute_bias(self, EPSILON=1e-2):
-        self.lagrange_multipliers[self.lagrange_multipliers < EPSILON] = 0
-        self.support_vectors_idx = np.where(self.lagrange_multipliers > 0)[0]
-        if self.support_vectors_idx.shape[0] == 0:
-            return 0
-        bias = 0
-        for i in self.support_vectors_idx:
-            kernels = np.array([self.kernel(self.data[:, j],
-                                            self.data[:, i],
-                                            *self.kernel_args)
-                                for j in range(self.data.shape[1])])
-            bias += self.labels[i] - np.sum(self.lagrange_multipliers
-                                            * self.labels * kernels)
-        return bias / self.support_vectors_idx.shape[0]
-
     def set_kernel(self, kernel, *args):
         self.kernel = kernel
         self.kernel_args = args
@@ -165,6 +150,21 @@ class SVM:
         solvers.options['show_progress'] = self.show_progress
         solution = solvers.qp(P, q, G, h, A, b)['x']  # get coptimal values
         return np.asarray(solution).reshape((data_size, ))  # make it array
+
+    def compute_bias(self, EPSILON=1e-2):
+        self.lagrange_multipliers[self.lagrange_multipliers < EPSILON] = 0
+        self.support_vectors_idx = np.where(self.lagrange_multipliers > 0)[0]
+        if self.support_vectors_idx.shape[0] == 0:
+            return 0
+        bias = 0
+        for i in self.support_vectors_idx:
+            kernels = np.array([self.kernel(self.data[:, j],
+                                            self.data[:, i],
+                                            *self.kernel_args)
+                                for j in range(self.data.shape[1])])
+            bias += self.labels[i] - np.sum(self.lagrange_multipliers
+                                            * self.labels * kernels)
+        return bias / self.support_vectors_idx.shape[0]
 
     def __train(self, data, labels):
         """ find the separator coordiantes
@@ -318,7 +318,7 @@ plot_data(X, Y)
 data, labels = X, Y
 svm = SVM()
 svm.set_kernel(poly_kernel, 2)  # set polynomial kernels
-svm.train(data, labels, C=10)
+svm.train(data, labels, C=10)  # large C, narrow margin
 svm.print_2Ddecision(print_non_sv=False, color='coolwarm')
 
 # multiple classes: linear
