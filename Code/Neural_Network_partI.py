@@ -1,4 +1,4 @@
-# Neural Network
+# Neural Network I
 # @ Michael
 
 # This code includes a class that fits logistic regression and a class
