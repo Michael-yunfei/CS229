@@ -7,7 +7,7 @@ This repository is built for me to tackle the mathematical models and algorithm 
 * [CS230: Syllabus](https://cs230.stanford.edu/syllabus/)
 * [CS230: Lectures](https://cs230.stanford.edu/lecture/)
 
-CS229 prepares you to be a machine learning specialist capable of developing ML algorithms. Some people who don't have strong mathematical backgroup might find this course very challenging. Please, don't feel intimidated. I have typed almost all the mathematical derivations for each ML models, and put the source code in this repository. As long as you have studied *Linear Algebra* and *Calculus*, you should be fine. 
+CS229 prepares you to be a machine learning specialist capable of developing ML algorithms. CS230 could transfer you to be an expert of deep learning models by knowing how to design the infrastructure of neural network models and train yoour models efficiently. Some people who don't have strong mathematical backgroup might find these two courses very challenging. Please, don't feel intimidated. I have typed almost all the mathematical derivations for each ML models, and put the source code in this repository. As long as you have studied *Linear Algebra* and *Calculus*, you should be fine.
 
 The following textbooks are recommended:
 
